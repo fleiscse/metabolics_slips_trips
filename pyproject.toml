@@ -1,0 +1,50 @@
+[project]
+name = "metabolics_slips_trips"
+version = "0.1.0" # Don't modify this line, it is managed by "uv version"
+description = "analysis of experimental data of perturbed treadmill walking (slips, trips)"
+authors = [
+    {name = "Sophie Fleischmann", email = "sophie.fl.fleischmann@fau.de"},
+]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "openpyxl>=3.1.5",
+    "pandas>=2.3.3",
+    "seaborn>=0.13.2",
+    "tpcp>=2.1.0",
+    "xlrd>=2.0.2",
+]
+
+
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.poe.tasks]
+_format = "ruff format src"
+_auto_fix = "ruff check src --fix-only --show-fixes --exit-zero"
+_auto_fix_unsafe = "ruff check src --fix-only --show-fixes --exit-zero --unsafe-fixes"
+format = ["_auto_fix", "_format"]
+format_unsafe = ["_auto_fix_unsafe", "_format"]
+lint = { cmd = "ruff check src --fix", help = "Lint all files with ruff." }
+_lint_ci = "ruff check src --output-format=github"
+_check_format = "ruff format src --check"
+ci_check = { sequence = ["_check_format", "_lint_ci"], help = "Check all potential format and linting issues." }
+test = { cmd = "pytest --cov=metabolics_slips_trips --cov-report=term-missing --cov-report=xml", help = "Run Pytest with coverage." }
+version = { script = "_tasks:task_update_version()" }
+conf_jupyter = { cmd = "python -m ipykernel install --user --name metabolics_slips_trips", help = "Add a new jupyter kernel for the project." }
+
+remove_jupyter = { cmd = "jupyter kernelspec uninstall metabolics_slips_trips", help = "Remove the project specific jupyter kernel."}
+experiment = { script = "_tasks:task_new_experiment()", help = "Create the boilerplate for a new experiment in the experiment subfolder."}
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
+    "ipympl>=0.9.8",
+    "poethepoet>=0.38.0",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.9",
+]
+
