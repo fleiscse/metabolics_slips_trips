@@ -8,20 +8,12 @@ analysis of experimental data of perturbed treadmill walking (slips, trips)
 ```
 metabolics_slips_trips
 │   README.md
-├── metabolics_slips_trips  # The core library folder. All project-wide helper and algorithms go here
+├── src  # The core library folder. All project-wide helper and algorithms go here
+    ├── metabolic_slips_trips # contains the loader class and helper files for data analysis and plots
+    |
+    ├── notebooks #jupyter notebooks that show how to load the data, compute features from the data and analyzse those features
 |
-├── experiments  # The main folder for all experiements. Each experiment has its own subfolder
-|   ├── experiment_1  # A single experiment (can be created with `poe experiment experiment_name`)
-|   |   ├── notebooks  # All narrative notebooks belonging to the experiment.
-|   |   ├── scripts  # Python scripts for this experiment
-|   |   ├── helper  # A Python module with experiment specific helper functions
-|   |
-|   ├── experiment_2
-|       ├── ...
-|
-├── tests  # Unit tests for the `metabolics_slips_trips` library
-|
-├── data  # The main data folder. This is ignored in the `.gitignore` by default.
+├── data  # The main data folder. Data is not uploaded, so it should be added here manually!! This is ignored in the `.gitignore` by default.
 |
 |   pyproject.toml  # The required python dependencies for the project
 |   uv.lock  # The frozen python dependencies to reproduce exact results
